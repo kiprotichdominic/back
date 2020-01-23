@@ -1,11 +1,8 @@
 from flask import render_template, request, Blueprint
-
+from app.models import Post
 main = Blueprint("main",__name__)
-
-
 @main.route('/')
 @main.route("/home")
 def home():
-    return render_template("index.html", title="Home page")
-
-
+    posts = Post.query.all()
+    return render_template('index.html', posts=posts)

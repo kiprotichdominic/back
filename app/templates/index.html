@@ -1,9 +1,57 @@
-{% extends "layout.html" %} 
-{% block content %}
-    <div class="heropage">
-      <div class="herocontent text-center">
-        <h1>One Rating</h1>
-        <p>One Rating At A Time</p>
+{% extends "layout.html" %} {% block content %}
+<div class="heropage">
+  <div class="herocontent">
+    <h1>The #1 Rating <br> and Reviews Website <br> in Kenya</h1>
+    <p class="mt-4">Make a Five <i class="fas fa-star"></i> Rated decision Today</p>
+  </div>
+  <div class="steps">
+    <div class="text-center">
+    <figure>
+      <img src="{{ url_for('static', filename='images/account.png')}}" alt="Account" width="100px" class="step">
+      <figcaption>
+        SIGN UP
+      </figcaption>
+    </figure>
+    </div>
+    <div class="text-center">
+    <figure>
+      <img src="{{ url_for('static', filename='images/search.png')}}" alt="Account" width="100px" class="step">
+      <figcaption>
+        SEARCH
+      </figcaption>
+    </figure>
+    </div>
+    <div class="text-center">
+    <figure>
+      <img src="{{ url_for('static', filename='images/rate.png')}}" alt="Account" width="100px" class="step">
+      <figcaption>
+        RATE
+      </figcaption>
+    </figure>
+    </div>
+
+  </div>
+</div>
+<!-- {% for post in posts %}
+<div class="col-xs-12 col-sm-4 col-md-8 col-lg-12">
+  <div class="card p-2">
+    <div class="image">
+      <a class="img-card" href="">
+          <img src="{{ url_for('static', filename='featured_images/')}}{{post.image}}" />
+      </a>
+    </div>
+      <div class="card-content">
+          <h4 class="card-title">
+            {{post.title}}
+            
+          </h4>
+          <p class="card-body">
+            {{post.content}}
+            {% include 'stars.html' %}
+          </p>
       </div>
-   </div>
-{% endblock content %}
+  </div>
+
+{% endfor %} {% endblock content %} -->
+
+
