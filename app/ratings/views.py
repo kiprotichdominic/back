@@ -4,8 +4,8 @@ from flask_login import current_user, login_required, logout_user
 from app import db, bcrypt
 import secrets 
 from PIL import Image
-from app.models import Post, User
-from app.ratings.forms import PostForm
+from app.models import Post, User, Comment
+from app.ratings.forms import PostForm, CommentForm
 from ..main import views
 
 ratings = Blueprint('ratings', __name__)
@@ -22,7 +22,7 @@ def save_picture(form_image):
     final_image.save(picture_path)
     return picture_name
 @ratings.route("/post/new", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def newpost():
     form = PostForm()
     if form.validate_on_submit():
@@ -31,10 +31,23 @@ def newpost():
             picture_file = save_picture(form.image.data)
             final_pic = picture_file
             pic= final_pic
-        post = Post(title=form.title.data, content=form.content.data,image=pic)
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, image=pic)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been published!', 'success')
         return redirect(url_for('main.home'))
     myposts = Post.query.order_by(Post.posted_date.desc())
     return render_template('newpost.html', title='New Post', form=form, legend='New Post', myposts=myposts)
+
+
+@ratings.route("/post/<int:post_id>", methods=['GET', 'POST'])
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    comments = Comment.query.all()
+    form = CommentForm()
+    if form.validate_on_submit():
+        content = Comment(content=form.content.data,author=current_user, post_id = post_id )
+        db.session.add(content)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+    return render_template("rate.html", form=form, post = post, comments=comments)

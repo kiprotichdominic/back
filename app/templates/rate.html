@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <article class="media content-section card m-4 p-3">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='featured_images/' + post.image) }}">
+        <div class="media-body">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+        <div>
+            {% for comment in comments %}
+            <div class="container mt-2 mb-3">
+              <div class="">
+                <div class="media-body">
+                  <div class="article-metadata">
+                    <a class="mr-2" href=""></a>
+                    <small class="text-muted"
+                      >Posted by:{{ comment.author.username }}
+                      on {{ comment.date_posted.strftime('%Y-%m-%d') }}</small
+                    >
+                  </div>
+                  <p class="article-content">{{ comment.content }}</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        <div class="content-section p-3">
+            <form action="" method="POST">
+                {{form.hidden_tag()}}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 mt-5 text-center">Leave Comment</legend>
+                    <div class="form-group">
+                        {{ form.content.label(class="form-control-label") }}
+                        {% if form.content.errors %}
+                            {{ form.content(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.content.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.content(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{form.submit(class="btn btn-outline-info")}}
+                </div>
+            </form>
+        </div>
+      </article>
+</div>
+{% endblock %}

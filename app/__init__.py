@@ -9,6 +9,7 @@ app.config["SECRET_KEY"] = "efec7e52ccb4a3e86ec302b43fce90fa1c167ba1"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ratings.db"
 db = SQLAlchemy(app)
 login_manager= LoginManager(app)
+login_manager.init_app(app)
 bcrypt = Bcrypt(app)
 
 # import blueprints
